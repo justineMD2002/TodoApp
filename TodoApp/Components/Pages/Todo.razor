@@ -1,0 +1,114 @@
+@page "/todo"
+@rendermode InteractiveServer
+
+<PageTitle>Todo</PageTitle>
+
+<div class="todo-container">
+    <h1 class="todos-header">todos</h1>
+
+    <input class="todo-input" placeholder="What needs to be done?"
+       @bind="newTodo"
+       @bind:event="oninput"
+       @onkeydown="HandleKeyPress" />
+
+    <div class="filter-buttons">
+        <button class="filter-button @(currentFilter == Filter.All ? "active" : "")" @onclick="() => SetFilter(Filter.All)">All</button>
+        <button class="filter-button @(currentFilter == Filter.Active ? "active" : "")" @onclick="() => SetFilter(Filter.Active)">Active</button>
+        <button class="filter-button @(currentFilter == Filter.Completed ? "active" : "")" @onclick="() => SetFilter(Filter.Completed)">Completed</button>
+    </div>
+
+    <ul class="dropdown" style="@(filteredTodos.Any() ? "display:block;" : "display:none;")">
+        @foreach (var todo in filteredTodos)
+        {
+            <ul class="todo-item" @ondblclick="() => StartEditing(todo)">
+                <input type="checkbox" checked="@todo.IsDone" 
+                    @onchange="() => ToggleCompleted(todo)" 
+                    @onclick:stopPropagation="true" 
+                    class="todo-checkbox" />
+                @if (todo.IsBeingEdited)
+                {
+                    <input class="edit-input" @bind="todo.Title" @onkeydown="(e) => SaveEditOnEnter(e, todo)" />
+                }
+                else
+                {
+                    <span class="todo-text @(todo.IsDone ? "completed" : "")">@todo.Title</span>
+                }
+                <span class="delete-button" @onclick="() => RemoveTodo(todo)">❌</span>
+            </ul>
+        }
+    </ul>
+
+    <div class="items-left">
+        @ActiveItemsCount @(ActiveItemsCount == 1 ? "item" : "items") left!
+    </div>
+
+    <button @onclick="ClearCompleted" style="@(todos.Any(t => t.IsDone) ? "display:block;" : "display:none;")">
+        Clear Completed
+    </button>
+</div>
+
+@code {
+    private List<TodoItem> todos = new();
+    private string? newTodo;
+    private Filter currentFilter = Filter.All;
+
+    private IEnumerable<TodoItem> filteredTodos => currentFilter switch
+    {
+        Filter.Active => todos.Where(t => !t.IsDone),
+        Filter.Completed => todos.Where(t => t.IsDone),
+        _ => todos
+    };
+
+    private int ActiveItemsCount => todos.Count(t => !t.IsDone);
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem { Title = newTodo, IsDone = false });
+            newTodo = string.Empty;
+        }
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            AddTodo();
+        }
+    }
+
+    private void ToggleCompleted(TodoItem todo)
+    {
+        todo.IsDone = !todo.IsDone;
+    }
+
+    private void RemoveTodo(TodoItem todo)
+    {
+        todos.Remove(todo);
+    }
+
+    private void ClearCompleted()
+    {
+        todos = todos.Where(todo => !todo.IsDone).ToList();
+    }
+
+    private void SetFilter(Filter filter)
+    {
+        currentFilter = filter;
+    }
+
+    private void StartEditing(TodoItem todo)
+    {
+        todo.IsBeingEdited = true;
+    }
+
+    private void SaveEditOnEnter(KeyboardEventArgs e, TodoItem todo)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(todo.Title))
+        {
+            todo.IsBeingEdited = false;
+        }
+    }
+
+}
