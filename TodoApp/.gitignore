@@ -1,8 +1,13 @@
 # Ignore build results
 bin/
 obj/
+
+# Ignore .dll and .pdb files in all directories
+*.dll
+*.pdb
+
+# Other common ignores
 node_modules/
-# User-specific files
 .vs/
 .vscode/
 .idea/
@@ -30,14 +35,5 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
-# Ignore dotnet run generated files
-# Debug folder and generated files after running dotnet run
-bin/Debug/
-bin/Debug/net*/  # netcoreapp, net5, net6, etc.
-
 # Blazor-specific
 wwwroot/
-
-#dotnet run changes
-*./dll
-*./pdb
