@@ -1,0 +1,39 @@
+# Ignore build results
+bin/
+obj/
+
+# User-specific files
+.vs/
+.vscode/
+.idea/
+
+# User-specific configuration files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Core specific files
+appsettings.Development.json
+
+# MacOS system files
+.DS_Store
+
+# Windows Installer files
+Thumbs.db
+
+# JetBrains Rider
+.idea/
+
+# .NET Core specific files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignore dotnet run generated files
+# Debug folder and generated files after running dotnet run
+bin/Debug/
+bin/Debug/net*/  # netcoreapp, net5, net6, etc.
+
+# Blazor-specific
+wwwroot/
