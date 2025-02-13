@@ -1,7 +1,7 @@
 # Ignore build results
 bin/
 obj/
-
+node_modules/
 # User-specific files
 .vs/
 .vscode/
@@ -37,3 +37,7 @@ bin/Debug/net*/  # netcoreapp, net5, net6, etc.
 
 # Blazor-specific
 wwwroot/
+
+#dotnet run changes
+*./dll
+*./pdb
