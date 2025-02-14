@@ -1,13 +1,12 @@
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+html,
+body {
+    font-family: sans-serif;
 }
 
 .todo-container {
     width: 500px;
     margin: 0 auto;
-    z-index: 5; 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
-    box-sizing: border-box; 
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .todos-header {
@@ -21,7 +20,7 @@ html, body {
 
 .todo-input {
     width: 100%;
-    padding: 10px;
+    padding: 20px;
     font-style: italic;
     font-size: 25px;
     border: none;
@@ -29,24 +28,23 @@ html, body {
 }
 
 .todo-input:focus {
-    border: 1px solid #bc3e45; 
-    box-shadow: 0 0 5px #bc3e45; 
-    outline: none; 
+    box-shadow: 0 0 5px #bc3e45;
+    outline: none;
 }
 
 .filter-buttons {
     display: flex;
     justify-content: center;
-    flex: 2;
-    gap: 10px;
+    flex: 3;
+    gap: 5px;
 }
 
 .filter-button {
-    flex: 0;
     background-color: #ffffff;
     cursor: pointer;
     border: none;
     font-size: 14px;
+    border-radius: 3px;
     text-align: center;
 }
 
@@ -60,7 +58,6 @@ html, body {
 }
 
 .dropdown {
-    list-style-type: none;
     padding-left: 0;
     margin-top: 10px;
     width: 100%;
@@ -70,16 +67,12 @@ html, body {
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
     font-size: 25px;
+    transform: translateY(-10px);
     background-color: #fff;
-    border-radius: 4px; 
-    position: relative; 
-    transform: translateY(-5px); 
-    transition: all 0.3s ease; 
     box-sizing: border-box;
 }
 
@@ -88,30 +81,21 @@ html, body {
 }
 
 .todo-checkbox {
-    appearance: none; 
-    width: 20px;
-    height: 20px;
-    border-radius: 50%; 
-    border: 2px solid #000;
-    background-color: white; 
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid gray;
     cursor: pointer;
-    position: relative;
 }
 
 .todo-checkbox:checked {
     background-color: #4CAF50;
-    border: 2px solid #4CAF50; 
+    border: 2px solid #4CAF50;
 }
 
 .todo-checkbox:checked::before {
-    content: ''; 
     position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border-radius: 50%;
 }
 
 .todo-text {
@@ -125,36 +109,33 @@ html, body {
 }
 
 .edit-input {
+    display: flex;
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    align-items: center;
+    padding: 10px 55px;
+    border: none;
+    font-size: 25px;
+    transform: translateY(-10px);
+    background-color: #fff;
     box-sizing: border-box;
-}
-
-.edit-input:focus {
-    border: 1px solid #bc3e45; 
-    box-shadow: 0 0 5px #bc3e45; 
-    outline: none; 
+    box-shadow: 0 0 5px #bc3e45;
+    outline: none;
 }
 
 .delete-button {
     cursor: pointer;
     margin-left: 5px;
-    color: red;
+    color: #bc3e45;
     font-size: 16px;
-    visibility: hidden; 
+    visibility: hidden;
     transition: visibility 0.3s ease;
 }
 
 .clear-button {
-    margin-left: auto; 
     background-color: #ffffff;
     border: none;
     font-size: 14px;
     cursor: pointer;
-    text-align: center;
-    box-sizing: border-box;
 }
 
 .clear-button:hover {
@@ -164,17 +145,9 @@ html, body {
 
 .items-left {
     white-space: nowrap;
-    margin-left: 2px;
-    flex: 1; 
 }
 
 .bottom-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center; 
     font-size: 15px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 2px;
-    margin-bottom: 2px;
 }

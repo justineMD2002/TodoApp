@@ -3,32 +3,39 @@
 
 <PageTitle>TodoMVC:BLAZOR</PageTitle>
 
-<h1 class="todos-header">todos</h1>
-<div class="todo-container">
-    <input class="todo-input" placeholder="What needs to be done?" @bind="newTodo" @bind:event="oninput"
-        @onkeydown="HandleKeyPress" />
+<header>
+    <h1 class="todos-header">todos</h1>
+</header>
+<main>
+    <div class="todo-container">
+        <input class="todo-input" placeholder="What needs to be done?" @bind="newTodo" @bind:event="oninput"
+            @onkeydown="HandleKeyPress" />
 
-    <ul class="dropdown" style="@(filteredTodos.Any() ? "display:block;" : "display:none;")">
-        @foreach (var todo in filteredTodos)
-        {
-            <ul class="todo-item" @ondblclick="() => StartEditing(todo)">
-                <input type="checkbox" checked="@todo.IsDone" @onchange="() => ToggleCompleted(todo)"
-                    @onclick:stopPropagation="true" class="todo-checkbox" />
-
+        <ul class="dropdown" style="@(filteredTodos.Any() ? "display:block;" : "display:none;")">
+            @foreach (var todo in filteredTodos)
+            {
                 @if (todo.IsBeingEdited)
                 {
                     <input class="edit-input" @bind="todo.Title" @onkeydown="(e) => SaveEditOnEnter(e, todo)"
-                        @onblur="() => StopEditing(todo)" /> <!-- Handle blur event -->
+                        @onblur="() => StopEditing(todo)" />
                 }
                 else
                 {
-                    <span class="todo-text @(todo.IsDone ? "completed" : "")">@todo.Title</span>
-                }
+                    <li class="todo-item" @ondblclick="() => StartEditing(todo)">
+                        <input type="checkbox" checked="@todo.IsDone" @onchange="() => ToggleCompleted(todo)"
+                            @onclick:stopPropagation="true" class="todo-checkbox" />
 
-                <span class="delete-button" @onclick="() => RemoveTodo(todo)">❌</span>
-            </ul>
-        }
-    </ul>
+                        <span class="todo-text @(todo.IsDone ? "completed" : "")">@todo.Title</span>
+
+                        <span class="delete-button" @onclick="() => RemoveTodo(todo)">❌</span>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</main>
+
+<footer>
     @if (todos.Any())
     {
         <div class="bottom-container">
@@ -50,7 +57,7 @@
             </button>
         </div>
     }
-</div>
+</footer>
 
 @code {
     private List<TodoItem> todos = new();
@@ -107,6 +114,7 @@
     {
         todo.IsBeingEdited = true;
     }
+
     private void SaveEditOnEnter(KeyboardEventArgs e, TodoItem todo)
     {
         if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(todo.Title))
@@ -119,7 +127,7 @@
     {
         if (string.IsNullOrWhiteSpace(todo.Title))
         {
-            todo.Title = "Untitled"; // Set a default value if title is empty
+            todo.Title = "Untitled";
         }
         todo.IsBeingEdited = false;
     }
