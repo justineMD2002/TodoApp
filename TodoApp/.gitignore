@@ -2,38 +2,5 @@
 bin/
 obj/
 
-# Ignore .dll and .pdb files in all directories
-*.dll
-*.pdb
-
 # Other common ignores
 node_modules/
-.vs/
-.vscode/
-.idea/
-
-# User-specific configuration files
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# ASP.NET Core specific files
-appsettings.Development.json
-
-# MacOS system files
-.DS_Store
-
-# Windows Installer files
-Thumbs.db
-
-# JetBrains Rider
-.idea/
-
-# .NET Core specific files
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
-# Blazor-specific
-wwwroot/
