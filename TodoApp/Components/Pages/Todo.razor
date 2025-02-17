@@ -6,63 +6,73 @@
 <header>
     <h1 class="todos-header">todos</h1>
 </header>
-<main>
-    <div class="todo-container">
-        <input class="todo-input" placeholder="What needs to be done?" @bind="newTodo" @bind:event="oninput"
-            @onkeydown="HandleKeyPress" />
-
-        <ul class="dropdown" style="@(filteredTodos.Any() ? "display:block;" : "display:none;")">
-            @foreach (var todo in filteredTodos)
+<main class="todo-container">
+    <div class="input-container">
+        <button class="arrow-down-button" @onclick="CheckAllActiveTodos">
+            @if (todos.Any())
             {
-                @if (todo.IsBeingEdited)
-                {
-                    <input class="edit-input" @bind="todo.Title" @onkeydown="(e) => SaveEditOnEnter(e, todo)"
-                        @onblur="() => StopEditing(todo)" />
-                }
-                else
-                {
-                    <li class="todo-item" @ondblclick="() => StartEditing(todo)">
-                        <input type="checkbox" checked="@todo.IsDone" @onchange="() => ToggleCompleted(todo)"
-                            @onclick:stopPropagation="true" class="todo-checkbox" />
-
-                        <span class="todo-text @(todo.IsDone ? "completed" : "")">@todo.Title</span>
-
-                        <span class="delete-button" @onclick="() => RemoveTodo(todo)">❌</span>
-                    </li>
-                }
+                <span>v</span>
             }
-        </ul>
+        </button>
+
+        <input class="todo-input" placeholder="What needs to be done?" @bind="newTodo" @bind:event="oninput"
+            @onfocus="CloseEditing" @onkeydown="HandleKeyPress" />
     </div>
+
+    <ul class="dropdown" style="@(filteredTodos.Any() ? "display:block;" : "display:none;")">
+        @foreach (var todo in filteredTodos)
+        {
+            @if (todo.IsBeingEdited)
+            {
+                <input class="edit-input" @bind="todo.Title" @onkeydown="(e) => SaveEditOnEnter(e, todo)"
+                    @onblur="() => StopEditing(todo)" @ref="editInput" />
+            }
+            else
+            {
+                <li class="todo-item" @ondblclick="() => StartEditing(todo)">
+                    <input type="checkbox" checked="@todo.IsDone" @onchange="() => ToggleCompleted(todo)"
+                        @onclick:stopPropagation="true" class="todo-checkbox" />
+
+                    <span class="todo-text @(todo.IsDone ? "completed" : "")">@todo.Title</span>
+
+                    <span class="delete-button" @onclick="() => RemoveTodo(todo)">❌</span>
+                </li>
+            }
+        }
+    </ul>
+
+    <footer>
+        @if (todos.Any())
+        {
+            <div class="bottom-container">
+                <div class="items-left">
+                    @ActiveItemsCount @(ActiveItemsCount > 1 ? "items" : "item") left!
+                </div>
+
+                <div class="filter-buttons">
+                    <button class="filter-button @(currentFilter == Filter.All ? "active" : "")"
+                        @onclick="() => SetFilter(Filter.All)">All</button>
+                    <button class="filter-button @(currentFilter == Filter.Active ? "active" : "")"
+                        @onclick="() => SetFilter(Filter.Active)">Active</button>
+                    <button class="filter-button @(currentFilter == Filter.Completed ? "active" : "")"
+                        @onclick="() => SetFilter(Filter.Completed)">Completed</button>
+                </div>
+
+                <button class="clear-button" @onclick="ClearCompleted">
+                    Clear Completed
+                </button>
+            </div>
+        }
+    </footer>
 </main>
-
-<footer>
-    @if (todos.Any())
-    {
-        <div class="bottom-container">
-            <div class="items-left">
-                @ActiveItemsCount @(ActiveItemsCount > 0 ? "items" : "item") left!
-            </div>
-
-            <div class="filter-buttons">
-                <button class="filter-button @(currentFilter == Filter.All ? "active" : "")"
-                    @onclick="() => SetFilter(Filter.All)">All</button>
-                <button class="filter-button @(currentFilter == Filter.Active ? "active" : "")"
-                    @onclick="() => SetFilter(Filter.Active)">Active</button>
-                <button class="filter-button @(currentFilter == Filter.Completed ? "active" : "")"
-                    @onclick="() => SetFilter(Filter.Completed)">Completed</button>
-            </div>
-
-            <button class="clear-button" @onclick="ClearCompleted">
-                Clear Completed
-            </button>
-        </div>
-    }
-</footer>
 
 @code {
     private List<TodoItem> todos = new();
     private string? newTodo;
     private Filter currentFilter = Filter.All;
+
+    private ElementReference editInput;
+    private bool shouldFocusEditInput = false;
 
     private IEnumerable<TodoItem> filteredTodos => currentFilter switch
     {
@@ -113,6 +123,7 @@
     private void StartEditing(TodoItem todo)
     {
         todo.IsBeingEdited = true;
+        shouldFocusEditInput = true;
     }
 
     private void SaveEditOnEnter(KeyboardEventArgs e, TodoItem todo)
@@ -130,5 +141,33 @@
             todo.Title = "Untitled";
         }
         todo.IsBeingEdited = false;
+    }
+
+    private void CloseEditing()
+    {
+        foreach (var todo in todos)
+        {
+            if (todo.IsBeingEdited)
+            {
+                StopEditing(todo);
+            }
+        }
+    }
+
+    private void CheckAllActiveTodos()
+    {
+        foreach (var todo in todos.Where(t => !t.IsDone))
+        {
+            todo.IsDone = true;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (shouldFocusEditInput)
+        {
+            shouldFocusEditInput = false;
+            await editInput.FocusAsync();
+        }
     }
 }
