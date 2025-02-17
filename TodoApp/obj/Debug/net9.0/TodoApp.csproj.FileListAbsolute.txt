@@ -1,7 +1,5 @@
 /home/keanu-laptop/projects/TodoApp/TodoApp/bin/Debug/net9.0/appsettings.Development.json
 /home/keanu-laptop/projects/TodoApp/TodoApp/bin/Debug/net9.0/appsettings.json
-/home/keanu-laptop/projects/TodoApp/TodoApp/bin/Debug/net9.0/package-lock.json
-/home/keanu-laptop/projects/TodoApp/TodoApp/bin/Debug/net9.0/package.json
 /home/keanu-laptop/projects/TodoApp/TodoApp/bin/Debug/net9.0/TodoApp.staticwebassets.runtime.json
 /home/keanu-laptop/projects/TodoApp/TodoApp/bin/Debug/net9.0/TodoApp.staticwebassets.endpoints.json
 /home/keanu-laptop/projects/TodoApp/TodoApp/bin/Debug/net9.0/TodoApp
@@ -31,7 +29,11 @@
 /home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/TodoApp.pdb
 /home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/TodoApp.genruntimeconfig.cache
 /home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/ref/TodoApp.dll
-/home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/uq5bg62ost-bcd3k41n62.gz
 /home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/TodoApp.sourcelink.json
 /home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/hq25zse84y-3sh1ua02v3.gz
 /home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/erhrp8tag8-3sh1ua02v3.gz
+/home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/t28uhg7bpo-tp77g40l2q.gz
+/home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/4zqd0bshsj-h7yakmw3ux.gz
+/home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/ib24m467ut-c7cgyjt8f4.gz
+/home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/b6c5xv43j2-eavqhu8rzp.gz
+/home/keanu-laptop/projects/TodoApp/TodoApp/obj/Debug/net9.0/compressed/zdlgayg3k7-4v7yzyqcsb.gz
