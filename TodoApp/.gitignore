@@ -1,6 +1,26 @@
-# Ignore build results
+# Build artifacts
 bin/
 obj/
 
-# Other common ignores
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Rider / VSCode settings (if applicable)
+.idea/
+*.sln.iml
+.vscode/
+
+# User secrets directory (if using .NET User Secrets)
+**/secrets.json
+
+# Node-related (if using Node for frontend)
 node_modules/
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
